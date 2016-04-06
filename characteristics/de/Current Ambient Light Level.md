@@ -1,0 +1,2 @@
+# Aktuelle Umgebungslichthelligkeit
+in Lux. 
