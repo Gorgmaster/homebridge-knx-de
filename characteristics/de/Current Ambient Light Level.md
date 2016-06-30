@@ -1,2 +1,5 @@
 # Aktuelle Umgebungslichthelligkeit
-in Lux. 
+
+- in Lux.
+- lesbar aus HomeKit, nicht beschreibbar. 
+
