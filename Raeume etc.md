@@ -2,15 +2,18 @@ Ich erkläre mal kurz was zu den "Accessories", "Services", "Bereichen" und "Rä
 
 **Apple stellt sich das folgendermaßen vor:**
 
+## Accessory
 Ein **"Accessory"** ist ein (physisches) Gerät, das über Bluetooth oder WLAN über das Apple-Homekit-Protokoll ("HAP" - Homekit-Application-Protocol) mit dem iPhone/iPad/AppleTV sprechen kann. Diese Geräte muss man (i.d.R. einzeln) über eine App (z.B. EVE oder Devices oder ...) in HomeKit anmelden (dabei fragen sie dann nach Code etc).
 
+## Raum und Bereich
 In **"Räume"** kann man Geräte stecken (bzw. abbilden wo sie physisch stehen). Wenn ich also 5 Lampen im Wohnzimmer habe, kann ich später über Siri "alle Lampen im Wohnzimmer" schalten oder abfragen. Räume können einem oder mehreren **Bereich(en)** zugeordnet werden: Z.B. Etagen oder für die größeren Latifundien "Westflügel" oder so. Bereiche können derzeit nicht geschachtelt werden.
 Bereiche erlauben wie die Räume das Gruppieren von Geräten (allerdings immer nur mittelbar über Räume - Geräte können nicht in Bereichen stehen). So kann ich abends "alle Lichter im Erdgeschoss" ausschalten, oder "alle Lampen im Garten" (der muss entweder ein Raum sein oder einen Raum enthalten!)
 Das passiert alles in der **Homekit-Datenbank**, und nicht in Homebridge! In Homebridge definieren wir nur die Accessories mit ihren Services, s.u.; Homekit speichert diese Zuordnungen in der iCloud-Datenbank. Mehrere iGeräte die den gleichen iCloud-Account verwenden greifen daher auch auf die gleiche Homekit-Datenbank zu (es gibt allerdings immer noch Probleme bei der Replikation) - iGeräte mit unterschiedlichen iCloud-Accounts muss man explizit einladen (Einstellungen --> Homekit --> (Haus) --> Personen einladen.)
 
 Nun zu den **Services** und so weiter:
-
+## Service
 Ein physisches Gerät ("Accessory") kann nicht nur eine Funktion haben. Apple nannte in der WWDC-Präsentation damals den Geragentüröffner, der gleichzeitig eine Lampe hat. Dazu hat Homekit die Abstraktionsebene "Service". Unser Garagentüröffner hat also die "Services" "Garagentür" und "Lampe".
+## Characteristics
 Jeder Service hat bestimmte Eigenschaften ("Characteristics"), die zwingend vorgegeben sind: Für die Lampe ist das beispielsweise die Eigenschaft "Strom an/aus" ("On"). Es gibt weitere optionale Eigenschaften wie "Helligkeit" für eine Lampe, die dimmbar ist. Oder "Hue"/Farbton für eine RGB-Lampe.
 Die derzeit unterstützten Services von Homebridge-knx findet ihr hier: https://github.com/snowdd1/homebridge-knx#supported-services-and-their-characteristics .
 
