@@ -25,7 +25,7 @@ Häufigste Fehler, die mir alle schon passiert sind:
 -  Anführungszeichen nicht wieder geschlossen
 -  Komma zu viel oder zu wenig (passiert schnell beim Kopieren von Teilen der Datei)
 
-Sie auch meine [kurze Einführung in JSON!](JSON%20f)
+Sie auch meine [kurze Einführung in JSON!](JSON%20f%C3%BCr%20Anf%C3%A4nger.md)
 
   
 
@@ -45,8 +45,16 @@ Homebridge erfordert einige wenige Einträge in der config.json, die wir in der 
 		"pin": "031-45-154"
 	},
 ```
-Dabei bedeutet 
+Dabei bedeutet  
+`bridge`: ist das Objekt das homebridge für die Konfiguration der HomeKit-Brücke verwendet.  
+`username`: ist eine (im lokalen Netzwerk zwingend eindeutige) ID für die Brücke. So merkt sich HomeKit, ob es die Brücke (allgemein: das physische Gerät) kennt und damit gekoppelt ist.  
+`port`: Auf welchem Port die Brücke http-Anfragen beantworten kann. Ich empfehle den Standard `51826` nicht zu ändern.
+`pin`:  Eine Geheimzahl, die man beim Koppeln (engl. Pairing) der Brücke mit HomeKit auf dem iPhone oder iPad angeben muss. Apple hat leider eine unveröffentlichte Liste an Komplexitätskriterien, die so eine Pin erfüllen muss. Bei Änderung kann es also passieren, dass HoemKit die Brücke nicht mehr akzeptiert! 123-45-678 geht definitiv nicht!
+
+Unter dem Namen KNX-sample-config.json liegt eine Beispieldatei im Repository homebridge-knx.
 
 ## knx_config.json
 
 Wie obenerwähnt, ist die knx_config.json die zentrale Konfigurationsdatei für **homebridge-knx**. Bei Installation nach dieser Anleitung (LINK) auf einem Raspberry Pi gehört diese Datei in den Pfad `\home\pi\.homebridge` 
+
+

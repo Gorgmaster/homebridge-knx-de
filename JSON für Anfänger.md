@@ -34,6 +34,6 @@ Wie man sieht, sind fast alle Werte ebenfalls in Anführungszeichen eingeschloss
 -  der Wert ist wahr/falsch (`"Reverse":true` oder `"Reverse":false`)
 -  der Wert ist eine Liste (Array) von Werten (`"Listen": ["1/2/3","1/2/4"]`) - dabei gilt natürlich für die Werte in der Liste das gleiche wie für alle anderen Werte auch!
 
-
+[Hier gehts zur Konfiguration von homebridge-knx...](Konfiguration.md)
 
 
