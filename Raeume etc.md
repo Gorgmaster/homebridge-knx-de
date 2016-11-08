@@ -2,8 +2,10 @@ Ich erkläre mal kurz was zu den "Accessories", "Services", "Bereichen" und "Rä
 
 **Apple stellt sich das folgendermaßen vor:**
 
-## Accessory
-Ein **"Accessory"** ist ein (physisches) Gerät, das über Bluetooth oder WLAN über das Apple-Homekit-Protokoll ("HAP" - Homekit-Application-Protocol) mit dem iPhone/iPad/AppleTV sprechen kann. Diese Geräte muss man (i.d.R. einzeln) über eine App (z.B. EVE oder Devices oder ...) in HomeKit anmelden (dabei fragen sie dann nach Code etc).
+## Accessory/Device
+Ein **"Accessory"** ist ein (physisches) Gerät, das über Bluetooth oder WLAN über das Apple-Homekit-Protokoll ("HAP" - Homekit-Application-Protocol) mit dem iPhone/iPad/AppleTV sprechen kann. Diese Geräte muss man (i.d.R. einzeln) über eine App (z.B. EVE oder Devices oder ...) in HomeKit anmelden (dabei fragen sie dann nach Code etc). Bei homebridge werden alle Geräte über eine *Bridge* in HomeKit angemeldet, daher brauchen wir den Code nicht für jedes Gerät einzeln einzugeben.  
+Die Bedeutung von *Accessories* schwindet in HomeKit immer mehr, da sich Apple von der (zufälligen) Kombination von verschiedenen *Services* (siehe unten) in einer Hardware-Box trennen möchte - für uns mit KNX optimal, denn i.d.R. haben wir mit physischen Geräten auf dieser Abstraktionsschicht nichts mehr am Hut. Das bedeutet aber auch, dass wir *Accessories* beliebig nutzen können, um *Services* zu gruppieren. Das wird spätestens dann nötig, wenn wir ansonsten 99 Accessories erreicht haben - Jede Brücke (homebridge in unserem Fall) darf nämlich (mit sich selbst) nur 100 Geräte an HomeKit melden, sonst akzeptiert HomeKit die ganze Brücke nicht mehr.
+In der `knx_config.json` von homebridge-knx heißen die *accessories* nun *Devices*, um stärker abzugrenzen, dass man dort (anders als in der config.json von homebridge) keine anderen accessory-plug-ins von homebridge verwenden kann. 
 
 ## Raum und Bereich
 In **"Räume"** kann man Geräte stecken (bzw. abbilden wo sie physisch stehen). Wenn ich also 5 Lampen im Wohnzimmer habe, kann ich später über Siri "alle Lampen im Wohnzimmer" schalten oder abfragen. Räume können einem oder mehreren **Bereich(en)** zugeordnet werden: Z.B. Etagen oder für die größeren Latifundien "Westflügel" oder so. Bereiche können derzeit nicht geschachtelt werden.
@@ -12,7 +14,8 @@ Das passiert alles in der **Homekit-Datenbank**, und nicht in Homebridge! In Hom
 
 Nun zu den **Services** und so weiter:
 ## Service
-Ein physisches Gerät ("Accessory") kann nicht nur eine Funktion haben. Apple nannte in der WWDC-Präsentation damals den Geragentüröffner, der gleichzeitig eine Lampe hat. Dazu hat Homekit die Abstraktionsebene "Service". Unser Garagentüröffner hat also die "Services" "Garagentür" und "Lampe".
+Ein physisches Gerät ("Accessory") kann nicht nur eine Funktion haben. Apple nannte in der WWDC-Präsentation damals den Geragentüröffner, der gleichzeitig eine Lampe hat. Dazu hat Homekit die Abstraktionsebene "Service". Unser Garagentüröffner hat also die "Services" "Garagentür" und "Lampe". Die ersten Generationen von HomeKit-Apps haben noch Probleme damit, dass es möglicherweise mehrere Services des gleichen Typs in einem Gerät gibt, und zeigen daher unvollständige oder gar falsche Informationen an. Dazu gehören derzeit die Apps *myTouchHome* und *Devices*, wobei hier *myTouchHome* insbesondere auf der Apple Watch versagt. Devices hat keine Watch-Integration.
+
 ## Characteristics
 Jeder Service hat bestimmte Eigenschaften ("Characteristics"), die zwingend vorgegeben sind: Für die Lampe ist das beispielsweise die Eigenschaft "Strom an/aus" ("On"). Es gibt weitere optionale Eigenschaften wie "Helligkeit" für eine Lampe, die dimmbar ist. Oder "Hue"/Farbton für eine RGB-Lampe.
 Die derzeit unterstützten Services von Homebridge-knx findet ihr hier: https://github.com/snowdd1/homebridge-knx#supported-services-and-their-characteristics .
