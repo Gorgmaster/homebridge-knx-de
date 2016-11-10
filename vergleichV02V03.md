@@ -130,3 +130,49 @@ Man sieht ein paar kleine Änderungen:
 |  `type` |  `ServiceType` |
 |   `name` innerhalb der services | `ServiceName` |
 |  `On` als Schlüssel für ein bestimmtes Charcteristic | `"Characteristics": [ "Type":"On", .... ]` als Liste mit einzelnen Characteristics, deren Typ im Schlüssel `Type` angegeben werden. |
+
+Insbesondere die letzte Änderung verursacht leider sehr viel manuelle Arbeit beim Umstieg. Diese Änderung war aber nötig, da auf diese Weise beliebige Characteristics zusammen in einen Service gesteckt werden können - und nicht nur die 2-3 die in der alten Version vorab codiert waren. 
+
+Für die Änderung der Richtung, z.B. bei Tür- oder Fensterkontakten, findet sich das neue Schlüsselwort `Reverse` innerhalb der Characteristic-Klammer:
+
+<table>
+<tr> <td> <b>Version 0.2.x</b>  </td><td>  <b>Version 0.3.x</b> </td></tr>
+<tr> <td> <i>in der config.json</i>  </td><td>  <i>in der knx_config.json</i> </td></tr>
+<tr><td>
+<pre>
+{
+	"name": "Bürofenster Links",
+	"services": [
+		{
+			"type": "ContactSensor",
+			"name": "Fensterkontakt Büro Links",
+			"ContactSensorState": {
+				"Listen": "5/3/6R"
+			}
+		}
+	]
+}
+ </pre>
+ </td><td> 
+ <pre>
+{
+	"DeviceName": "Bürofenster Links",
+	"Services": [
+		{
+			"ServiceType": "ContactSensor",
+			"ServiceName": "Fensterkontakt Büro Links",
+			"Characteristics": [
+				{
+					"Type":"ContactSensorState",
+					"Listen": [
+						"5/3/6"
+					],
+					"Reverse":true
+				}
+			]
+		}
+	]
+}
+</pre>
+ </td></tr>
+</table>  
