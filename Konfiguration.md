@@ -114,36 +114,41 @@ Optional **darf** ein Service noch haben:
 
 Mit jedem Update von iOS erwarten wir neue Services von Apple! Daher ist es zur Nutzung neuer Services erforderlich homebridge aktuell zu halten.
 
-# ENDE DER ÜBERSETZUNG
+###Characteristics
+Jedes *Characteristic* (Eigenschaft, Merkmal) ist ein Objekt mit **mindestens** genau einem `Type`-Schlüssel. Die möglichen Typen befinden sich in der gleichen Datei, die oben bei den Services verlinkt ist. Biespiele sind `On` für Strom an/aus, `Brightness` für Helligkeit von dimmbaren Lampen.  
+Jedes Characteristic **kann** ausserdem die folgenden Felder enthalten:  
+-  `Set`: Eine Liste mit Gruppenadressen, die beim Schalten aus Homekit heraus auf dem Bus geschrieben werden sollen.
+-  `Listen`: Eine Liste mit Gruppenadressen, auf die das Characteristic auf dem Bus hören soll.  
+-  `DPT`: Die Angabe eines KNX *data point type*  (derzeit unterstützt nur DPT1, DPT5, DPT5.001, DPT9).  
 
-##Characteristics
-Each characteristic is an object containing at least a `Type` field. Types can be "On" for power, "Brightness" for dimmable lights etc.  
-Characteristics **can** have assigned group addresses in the `Set` and `Listen` arrays.
-For the group addresses it is possible to define a *data point type* `DPT` (currently valid are DPT1, DPT5, DPT5.001, DPT9).  
-For boolean and percentage types it is possible to *reverse* the read/write value between HomeKit and KNX.
+Bei Characteristics, die laut HomeKit-Definition Boole'sch (*boolean*) oder Prozentwerte (*percentage*) sind, kann durch Angabe von `"Reverse":true` die Bedeutung zwischen HomeKit und KNX umgedreht werden.
 
-Characteristics without group addresses can only be used by a `handler`
+Characteristics ohne Gruppenadressen können nur durch einen Add-in, also einen `Handler` verwendet werden.
 
-##Handler
-New in version 0.3 of homebridge-knx is a little add-in concept, allowing additional functionality to be added without changing the big mass of the code.  
-`handler`s are defined as javascript files in `/lib/addins` and need to [follow some restrictions.](https://github.com/snowdd1/homebridge-knx/blob/plugin-2.0/handler-add-in.md)  
-To assign a handler to a service the **Handler** keyword is used, see example below.  
-Handlers cannot use the `Reverse` keyword for DPT1 and DPT5.001 types, this has to be taken care in the handler's programming.  
+###Handler
+Neu hinzugekommen sind in der Version 0.3 von homebridge-knx die `Handler`, die Möglichkeit eine eigene/angepasste Routine für die Behandlung von Ereignissen zu programmieren und den Services zuzuweisen. Die Idee dahinter ist, möglichst viele verschiedene KNX-Geräte abbilden zu können, ohne große Änderungen an homebridge-knx vornehmen zu müssen.
 
-##KNXObjects
-Handlers can make use of KNX group addresses that are not connected directly to characteristics. To allow references to those addresses, they are defined as if they were characteristics. 
-- The `Type` field is a freely definable name field (uniqueness within the service required). 
-- Definition of `DPT` **is mandatory** as the data point type cannot be inferred from a homekit characteristic!  
+`Handler` werden als JavaScipt-Datei im Verzeichnis `/lib/addins` und müssen [ein paar Einschränkungen einhalten](https://github.com/snowdd1/homebridge-knx/blob/master/handler-add-in.md)(engl.)    
 
-##LocalConstants
-Handlers can use service-local constants in their code. This allows using the same handler for alike-but-not-equal use cases. The values from the `LocalConstants` can be used in the handler code. This allows re-using the same handler for multiple objects that differ by more than group addresses.
+Handler können nicht in Kombination mit dem `Reverse` Schlüsselwort für DPT1 and DPT5.001 Typen verwendet werden, eine solche Wertumkehrung muss im add-in selbst programmiert werden.
 
-## UUID and subtype
-homebridge-knx creates a unique UUID for each device newly discovered in the *knx_config.json* and writes that back to the file. Similar, a unique `subtype` field is created for each service.  
-**Do not alter these fields** unless you want to force homebridge-knx to accept this as a **new** device or service, rendering the old one stale and unreachable.
+###KNXObjects
+Handler dürfen KNX-Adressen verwenden, die nicht direkt an Characteristics gebunden sind. Um im Code des add-ins auf diese zusätzlichen Adressen zugreifen zu können, werden diese in der Section `KNXObjects` des Services definiert.  
+Dabei ist KNXObjects eine Liste aus Objekten mit den Feldern  
+- `Type`: Name der Gruppenadresse. Muss innerhalb des Services eindeutig sein!   
+- `DPT` **zwingend** erforderlich, da es ja kein homekit characteristic gibt von dem aus auf den Typ geschlossen werden kann!
+- `Set`: Wie bei characteristics
+- `Listen`: Wie bei characteristics oben.  
 
-#Example
-```
+###LocalConstants
+Um weitere Werte aus der knx_config.json an den Handler zu übergeben, können in der Liste `LocalConstants` Konstanten definiert werden. Das Add-in kann diese dann im Programmcode referenzieren und bekommt die Werte übergeben. Damit können Handler verschiedene Services bedienen, die sich in etwas mehr als nur den Gruppenadressen unterscheiden.
+
+### UUID und subtype
+Jedesmal wenn homebridge-knx beim Starten in der *knx_config.json* ein neues *Device* findet, bekommt es eine zufällige ID zugewiesen (UUID), diese wird in der *knx_config.json*  gespeichert. Wird diese ID entfernt oder geändert, wird das Device in HomeKit als neues Gerät auftauchen, und das bisherige Device wird unerreichbar in HomeBridge bestehen bleiben.  
+Das gleiche gilt für die Services innerhalb eines Geräts, diese bekommen eine eindeutige `subtype` ID zugewiesen.
+
+##Beispiel
+```json
 {
     "knxd_ip": "192.168.178.100",
     "knxd_port": 6720,
