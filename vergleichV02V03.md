@@ -57,7 +57,8 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
  </td></tr>
 </table>  
 
-Die Geräte (Devices früher Accessories) sind nun in die knx_config.json gewandert.  
+##knx_config.json
+Die Geräte (Devices früher Accessories) sind nun in die **knx_config.json** gewandert.  
 Dabei hat sich das Format geändert, um mehr Möglichkeiten zuzulassen:  
 
 Hier mal ein Abschnitt der ein Gerät mit einem Service "Lampe" mit Dimmer abbildet:
