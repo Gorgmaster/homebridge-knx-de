@@ -10,7 +10,7 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 <table>
 <tr> <td> <b>Version 0.2.x</b>  </td><td>  <b>Version 0.3.x</b> </td></tr>
 <tr><td>
- Enthält die ganze Konfiguration sowohl für `homebridge`selbst, als auch alle Konfigurationsteile für <pre>homebridge-knx</pre>, genauso wie für alle anderen <i>homebridge-plug-ins</i>  
+ Enthält die ganze Konfiguration sowohl für <b>homebridge</b> selbst, als auch alle Konfigurationsteile für <i>homebridge-knx</i>, genauso wie für alle anderen <i>homebridge-plug-ins</i>  
  </td><td>  Die Konfiguration von `homebridge-knx` ist nicht mehr Teil der config.json, sondern in einer eigenen Datei knx_config.json
  </td></tr>
 <tr> <td> <i>Beispiel</i>  </td><td>  <i>Beispiel</i>  </td></tr>
@@ -23,7 +23,7 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 		"port": 51826, 
 		"pin": "031-45-154"
 	},
-	"description": "This is an example configuration file for KNX platform shim",
+	"description": "This is an example ....",
 	"platforms": [
 	],
 	"accessories": [
@@ -39,7 +39,7 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 		"port": 51826, 
 		"pin": "031-45-154"
 	},
-	"description": "This is an example configuration file for KNX platform shim",
+	"description": "This is an example ...",
 	"platforms": [ 
 		{
 			"name":"KNX",
@@ -57,3 +57,76 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
  </td></tr>
 </table>  
 
+Die Geräte (Devices früher Accessories) sind nun in die knx_config.json gewandert.  
+Dabei hat sich das Format geändert, um mehr Möglichkeiten zuzulassen:  
+
+Hier mal ein Abschnitt der ein Gerät mit einem Service "Lampe" mit Dimmer abbildet:
+<table>
+<tr> <td> <b>Version 0.2.x</b>  </td><td>  <b>Version 0.3.x</b> </td></tr>
+<tr> <td> <i>in der config.json</i>  </td><td>  <i>in der knx_config.json</i> </td></tr>
+<tr><td>
+<pre>
+{ 
+	"name": "Living Room North Lamp", 
+	"services": [ 
+		{ 
+			"type": "Lightbulb", 
+			"name": "Arbeitszimmerlampe", 
+			"On": { 
+					"Set": "1/1/6", 
+					"Listen": [ 
+							"1/1/63"
+					 ]
+			 }, 
+			"Brightness": { 
+				"Set": "1/1/62", 
+				"Listen": [ 
+						"1/1/64"
+				 ]
+		 }
+ }
+ </pre>
+ </td><td> 
+ <pre>
+  {
+    "DeviceName": "Arbeitszimmerlampe",
+    "Services": [
+        {
+            "ServiceType": "Lightbulb",
+            "ServiceName": "Bürolampe",
+            "Characteristics": [
+                {
+                    "Type": "On",
+                    "Set": [
+                        "1/1/6"
+                    ],
+                    "Listen": [
+                        "1/1/63"
+                    ]
+                },
+                {
+                	"Type":"Brightness",
+                	"Set": [
+                		"1/1/62"
+                	],
+                	"Listen": [
+                		"1/1/64"
+                	]
+                }
+            ]
+        }
+    ]
+}
+ </pre>
+ </td></tr>
+</table>  
+
+Man sieht ein paar kleine Änderungen:
+
+| Version 0.2.x | Version 0.3.x |
+| ----------------   | -----------------  |
+|  `name` auf der ersten Ebene der *accessories*  |  `DeviceName` |
+|  `services` |  `Services` |
+|  `type` |  `ServiceType` |
+|   `name` innerhalb der services | `ServiceName` |
+|  `On` als Schlüssel für ein bestimmtes Charcteristic | `"Characteristics": [ "Type":"On", .... ]` als Liste mit einzelnen Characteristics, deren Typ im Schlüssel `Type` angegeben werden. |
