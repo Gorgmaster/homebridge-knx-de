@@ -11,7 +11,8 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 | ------------------ | ---------------------
 | Enthält die ganze Konfiguration sowohl für `homebridge`selbst, als auch alle Konfigurationsteile für `homebridge-knx`, genauso wie für alle anderen *homebridge-plug-ins*  |  Die Konfiguration von `homebridge-knx` ist nicht mehr Teil der config.json, sondern in einer eigenen Datei *knx_config.json*
 | *Beispiel*  |  *Beispiel*  
-| ```json
+<tr><td>
+```
 { 
 	"bridge": { 
 		"name": "Homebridge", 
@@ -25,7 +26,9 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 	"accessories": [
 	 ]
  }
- ``` | ```
+ ```
+ </td><td> 
+ ```
   { 
 	"bridge": { 
 		"name": "Homebridge", 
@@ -46,6 +49,6 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 	 ]
  } 
  ```
- 
+ </td></tr>
   
 
