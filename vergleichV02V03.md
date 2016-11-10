@@ -5,12 +5,15 @@ Das Format der Konfigurationsdateien hat sich deutlich geändert.
 Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.  
 
 
-##config.json
+##config.json  
 
-| Version 0.2.x  |  Version 0.3.x
-| ------------------ | ---------------------
-| Enthält die ganze Konfiguration sowohl für `homebridge`selbst, als auch alle Konfigurationsteile für `homebridge-knx`, genauso wie für alle anderen *homebridge-plug-ins*  |  Die Konfiguration von `homebridge-knx` ist nicht mehr Teil der config.json, sondern in einer eigenen Datei *knx_config.json*
-| *Beispiel*  |  *Beispiel*  
+<table>
+<tr> <td> **Version 0.2.x**  </td><td>  **Version 0.3.x** </td></tr>
+<tr><td>
+ Enthält die ganze Konfiguration sowohl für `homebridge`selbst, als auch alle Konfigurationsteile für `homebridge-knx`, genauso wie für alle anderen *homebridge-plug-ins*  
+ </td><td>  Die Konfiguration von `homebridge-knx` ist nicht mehr Teil der config.json, sondern in einer eigenen Datei *knx_config.json*
+ </td></tr>
+<tr> <td> *Beispiel*  </td><td>  *Beispiel*  </td></tr>
 <tr><td>
 ```
 { 
@@ -42,6 +45,8 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 			"name":"KNX",
 			"platform":"KNX",
 			"accessories": [
+				HIER SIND DIE GERÄTE DEFINIERT, SIEHE UNTEN
+			
 			]
 		}
 	],
@@ -50,5 +55,5 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
  } 
  ```
  </td></tr>
-  
+</table>  
 
