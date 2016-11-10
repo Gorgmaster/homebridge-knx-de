@@ -15,22 +15,6 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
  </td></tr>
 <tr> <td> <i>Beispiel</i>  </td><td>  <i>Beispiel</i>  </td></tr>
 <tr><td>
-<pre>
-{ 
-	"bridge": { 
-		"name": "Homebridge", 
-		"username": "CC:22:3D:E3:CE:30", 
-		"port": 51826, 
-		"pin": "031-45-154"
-	},
-	"description": "This is an example ....",
-	"platforms": [
-	],
-	"accessories": [
-	 ]
- }
- </pre>
- </td><td> 
  <pre>
   { 
 	"bridge": { 
@@ -53,6 +37,21 @@ Dies betrifft sowohl die `config.json` als auch die neue `knx_config.json`.
 	"accessories": [
 	 ]
  } 
+ </pre> </td><td> 
+<pre>
+{ 
+	"bridge": { 
+		"name": "Homebridge", 
+		"username": "CC:22:3D:E3:CE:30", 
+		"port": 51826, 
+		"pin": "031-45-154"
+	},
+	"description": "This is an example ....",
+	"platforms": [
+	],
+	"accessories": [
+	 ]
+ }
  </pre>
  </td></tr>
 </table>  
