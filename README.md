@@ -13,5 +13,6 @@ findet ihr hier https://github.com/snowdd1/homebridge-knx-de/issues
 [Wissenswertes](Raeume%20etc.md) zu HomeKit - Accessories, Räume etc.  
 [Konfiguration](Konfiguration.md) der *homebridge-knx*   
 [Konfigurationsvergleich](vergleichV02V03.md)  zwischen Version 0.2 und 0.3  
-[Installation](Installation.md) auf einem Raspberry Pi - leider noch nicht fertig  
+[Installation](https://github.com/snowdd1/homebridge-knx-de/wiki/Installation-auf-dem-Raspberry-Pi) auf einem Raspberry Pi - Die Version aus dem Juli nun aktualisiert. 
  
+Im [Wiki](https://github.com/snowdd1/homebridge-knx-de/wiki) gibt es mehr - und oft aktuellere Informationen, denn dort darf jeder angemeldete Nutzer reinschreiben! 
