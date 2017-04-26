@@ -11,7 +11,7 @@ Das bedeutet
 -  wenn wir die knx_config.json ändern wollen, so müssen wir Datei verwenden, die auch homebridge-knx verwendet. D.h. wenn unsere homebridge auf einem Raspberry Pi oder in einer VM "headless", d.h. ohne Display, läuft, müssen wir die Datei mit sftp oder anderen Dateiübertragungsmethoden auf unseren PC laden (Ich schreibe hier immer PC, auch wenn es ein Mac sein kann!)
 -  wenn wir bestimmte Konfigurationen ändern oder löschen, behält homebridge einen alten Stand im Cache. Diesen müssen wir dann löschen
 
-###JSON
+### JSON
 Das Dateiformat [JSON (JavaScript Object Notation)]](https://de.m.wikipedia.org/wiki/JavaScript_Object_Notation) ist etwas speziell - und es verzeiht keine Fehler. Empfohlen ist daher, jede Änderung vor dem Upload zum homebridge-Server auf der Website http://jsonlint.com überprüfen zu lassen. Alternativ gibt es auch json-plugins für verschiedene Editoren, z.B. für notepad++, oder für die Entwicklungsumgebung eclipse.  
 
 Ganz wichtig und unbedingt immer ganz am Anfang der Konfigurationstätigkeiten zu erledigen: Die Zeichensatzeinstellungen für alle Konfigurationsdateien ist UTF-8. Windows verwendet gerne etwas anderes, das führt spätestens beim ersten Umlaut zur Katastrophe.
@@ -94,12 +94,12 @@ In einer Installation, die bei einem Fehler automatisch neu startet, bedeutet di
 
 `Devices` ist eine Liste (*Array*) von Objekten des Typs HomeKit [*Accessory*](Raeume%20etc.md#accessory) 
 
-###Devices
+### Devices
 `Devices` müssen einen eindeutigen `DeviceName` haben. Wenn der Name nach der Koppelung mit HomeKit in der Datei geändert wird, wird diese Änderung nicht mehr nach HomeKit transportiert - Der Name bleibt also in Homekit solange bestehen, wie das Gerät in HomeKit existiert. Um Änderungen trotzdem transportieren zu können, muss das Gerät mit Hilfe des in homebridge-knx integrierten Webservers gelöscht werden.  
 
 Jedes *Device* braucht eine Liste namens `Services`. In diesen Services werden die Funktionen des Geräts definiert.
 
-###Services
+### Services
 
 `Services` ist ein Array (Liste) von Objekten, die jedes einen HomeKit [*service*](Raeume%20etc.md#service) darstellen.  
 Jeder Service **muss** mindestens haben:
@@ -114,7 +114,7 @@ Optional **darf** ein Service noch haben:
 
 Mit jedem Update von iOS erwarten wir neue Services von Apple! Daher ist es zur Nutzung neuer Services erforderlich homebridge aktuell zu halten.
 
-###Characteristics
+### Characteristics
 Jedes *Characteristic* (Eigenschaft, Merkmal) ist ein Objekt mit **mindestens** genau einem `Type`-Schlüssel. Die möglichen Typen befinden sich in der gleichen Datei, die oben bei den Services verlinkt ist. Biespiele sind `On` für Strom an/aus, `Brightness` für Helligkeit von dimmbaren Lampen.  
 Jedes Characteristic **kann** ausserdem die folgenden Felder enthalten:  
 -  `Set`: Eine Liste mit Gruppenadressen, die beim Schalten aus Homekit heraus auf dem Bus geschrieben werden sollen.
@@ -125,14 +125,14 @@ Bei Characteristics, die laut HomeKit-Definition Boole'sch (*boolean*) oder Proz
 
 Characteristics ohne Gruppenadressen können nur durch einen Add-in, also einen `Handler` verwendet werden.
 
-###Handler
+### Handler
 Neu hinzugekommen sind in der Version 0.3 von homebridge-knx die `Handler`, die Möglichkeit eine eigene/angepasste Routine für die Behandlung von Ereignissen zu programmieren und den Services zuzuweisen. Die Idee dahinter ist, möglichst viele verschiedene KNX-Geräte abbilden zu können, ohne große Änderungen an homebridge-knx vornehmen zu müssen.
 
 `Handler` werden als JavaScipt-Datei im Verzeichnis `/lib/addins` und müssen [ein paar Einschränkungen einhalten](https://github.com/snowdd1/homebridge-knx/blob/master/handler-add-in.md)(engl.)    
 
 Handler können nicht in Kombination mit dem `Reverse` Schlüsselwort für DPT1 and DPT5.001 Typen verwendet werden, eine solche Wertumkehrung muss im add-in selbst programmiert werden.
 
-###KNXObjects
+### KNXObjects
 Handler dürfen KNX-Adressen verwenden, die nicht direkt an Characteristics gebunden sind. Um im Code des add-ins auf diese zusätzlichen Adressen zugreifen zu können, werden diese in der Section `KNXObjects` des Services definiert.  
 Dabei ist KNXObjects eine Liste aus Objekten mit den Feldern  
 - `Type`: Name der Gruppenadresse. Muss innerhalb des Services eindeutig sein!   
@@ -140,14 +140,14 @@ Dabei ist KNXObjects eine Liste aus Objekten mit den Feldern
 - `Set`: Wie bei characteristics
 - `Listen`: Wie bei characteristics oben.  
 
-###LocalConstants
+### LocalConstants
 Um weitere Werte aus der knx_config.json an den Handler zu übergeben, können in der Liste `LocalConstants` Konstanten definiert werden. Das Add-in kann diese dann im Programmcode referenzieren und bekommt die Werte übergeben. Damit können Handler verschiedene Services bedienen, die sich in etwas mehr als nur den Gruppenadressen unterscheiden.
 
 ### UUID und subtype
 Jedesmal wenn homebridge-knx beim Starten in der *knx_config.json* ein neues *Device* findet, bekommt es eine zufällige ID zugewiesen (UUID), diese wird in der *knx_config.json*  gespeichert. Wird diese ID entfernt oder geändert, wird das Device in HomeKit als neues Gerät auftauchen, und das bisherige Device wird unerreichbar in HomeBridge bestehen bleiben.  
 Das gleiche gilt für die Services innerhalb eines Geräts, diese bekommen eine eindeutige `subtype` ID zugewiesen.
 
-##Beispiel
+## Beispiel
 ```json
 {
     "knxd_ip": "192.168.178.100",
